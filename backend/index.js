@@ -41,7 +41,7 @@ async function startGame(req, res) {
   try {
     const payload = {
       time: Date.now(),
-      map: 2,
+      map: 1,
       characters: {
         "Wenda": false,
         "Woof": false,
@@ -79,7 +79,8 @@ app.post("/leaderboard/", passport.authenticate('jwt', { session: false }), asyn
   const result = await prisma.leaderboard.create({
     data: {
       username: username,
-      time: seconds
+      time: seconds,
+      mapId: req.user.map
     }
   });
   res.send(result);
@@ -94,11 +95,16 @@ app.get("/level/:id", (req, res) => {
   });
 });
 
-app.post("/level/:id/guess", passport.authenticate('jwt', { session: false }), (req, res) => {
-  console.log(req.user, "req user")
+app.post("/level/:id/guess", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  console.log(req.user, "req user");
+  const levelId = parseInt(req.params.id);
   const { coords, character } = req.body;
-  const selected = boxes.find((box) => box.name == character);
-  if (selected.tlx <= coords.x && coords.x <= selected.brx && selected.tly <= coords.y && coords.y <= selected.bry) {
+  const levelData = await prisma.character_on_map.findFirst({ where: { mapId: levelId, character: { name: character } }, include: { character: true } });
+  console.log(levelData)
+  // return res.send({ success: true, hit: false })
+  const selectedBBox = levelData.coords;
+  console.log(selectedBBox)
+  if (selectedBBox.tlx <= coords.x && coords.x <= selectedBBox.brx && selectedBBox.tly <= coords.y && coords.y <= selectedBBox.bry) {
     console.log("hit")
     const newState = { ...req.user, characters: { ...req.user.characters, [character]: true } };
     const token = jwt.sign(newState, process.env.JWT_SECRET);

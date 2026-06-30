@@ -23,7 +23,7 @@ async function saveOnLeaderboard(username) {
 async function sendHit(coords, character) {
     const token = localStorage.getItem("token");
     try {
-        const response = await fetch(BASE_URL + '/level/2/guess', {
+        const response = await fetch(BASE_URL + '/level/1/guess', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -41,7 +41,7 @@ async function sendHit(coords, character) {
 
 async function startGame(level) {
     try {
-        const response = await fetch(BASE_URL + '/start/2', {
+        const response = await fetch(BASE_URL + '/start/1', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
