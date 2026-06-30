@@ -11,4 +11,28 @@ model leaderboard {
   id       Int    @id @default(autoincrement())
   username String @db.VarChar(30)
   time     Int
+  mapId    Int
+  map      maps   @relation(fields: [mapId], references: [id])
+}
+
+model characters {
+  id              Int                @id
+  name            String             @db.VarChar(50)
+  characterOnMaps character_on_map[]
+}
+
+model maps {
+  id              Int                @id
+  name            String             @db.VarChar(50)
+  characterOnMaps character_on_map[]
+  leaderboards    leaderboard[]
+}
+
+model character_on_map {
+  id          Int        @id @default(autoincrement())
+  coords      Json
+  mapId       Int
+  map         maps       @relation(fields: [mapId], references: [id])
+  characterId Int
+  character   characters @relation(fields: [characterId], references: [id])
 }
