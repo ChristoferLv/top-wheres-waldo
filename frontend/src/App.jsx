@@ -1,8 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
+import { saveOnLeaderboard, sendHit, startGame } from './api/requests';
 
 function App() {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [running, setRunning] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [modal, setModal] = useState(false);
+  const [username, setUsername] = useState('');
   // const box = { tlx: 498, tly: 222, brx: 511, bry: 243 };
   const [boxes, setBoxes] = useState([
     { id: 0, name: "Waldo", found: false, tlx: 498, tly: 222, brx: 511, bry: 243 },
@@ -12,9 +17,14 @@ function App() {
     { id: 4, name: "Odlaw", found: false, tlx: 92, tly: 208, brx: 102, bry: 229 },
   ]);
 
+  useEffect(() => {
+    const allFound = boxes.every((box) => box.found);
+    if (allFound) alert("You won")
+  }, [boxes])
+
   const huntStatus = <ul className='hunt-status-ul'>
-    {boxes.map((box) => <li className='hunt-status-li'>
-      <span>{box.name}: {box.found?"Found":"Not found"}</span>
+    {boxes.map((box) => <li key={box.id} className='hunt-status-li'>
+      <span>{box.name}: {box.found ? "Found" : "Not found"}</span>
     </li>)}
   </ul>
 
@@ -62,10 +72,13 @@ function App() {
     setIsVisible(false)
   }
 
-  function checkChoice(id) {
+  async function checkChoice(id) {
     const selected = boxes.find((box) => box.id == id);
-    if (selected.tlx <= coords.x && coords.x <= selected.brx && selected.tly <= coords.y && coords.y <= selected.bry) {
-      console.log("inside");
+    const result = await sendHit(coords, selected.name);
+    if (result && result.hit) {
+      console.log("outside")
+
+      localStorage.setItem("token", result.token);
       const newBoxes = boxes.map((box) => {
         if (box.id == selected.id) {
           return { ...selected, found: true };
@@ -73,24 +86,60 @@ function App() {
         return box;
       });
       setBoxes(newBoxes);
+      if(result.finished){
+        setRunning(false)
+        setModal(true)
+      }
     } else {
       console.log("outside")
     }
+    console.log(result)
+    // if (selected.tlx <= coords.x && coords.x <= selected.brx && selected.tly <= coords.y && coords.y <= selected.bry) {
+    //   console.log("inside");
+    //   const newBoxes = boxes.map((box) => {
+    //     if (box.id == selected.id) {
+    //       return { ...selected, found: true };
+    //     }
+    //     return box;
+    //   });
+    //   setBoxes(newBoxes);
+    // } else {
+    //   console.log("outside")
+    // }
+  }
+
+  async function handleStartGame() {
+    const result = await startGame();
+    if (result && result.success) {
+      setRunning(running => !running);
+      console.log(result)
+    }
+  }
+
+  async function handleSaveOnLeaderBoard() {
+    console.log("called")
+    const result = await saveOnLeaderboard(username);
+    console.log(result)
   }
 
   return (
     <>
       <div className='content'>
-        <Clock></Clock>
+        <Clock running={running} counter={counter} setCounter={setCounter}></Clock>
+        <button onClick={handleStartGame}>Start</button>
         {huntStatus}
+        <button
+          onClick={() => setModal(true)}
+        >
+          Open modal
+        </button>
         <div onClick={handleCLick} id='picture-frame' className="picture">
           <div style={{ left: coords.x, top: coords.y }} id='marker' className="marker"></div>
           {boxes.map((box) => {
-            return <div id={box.id} className={(box.found ? "found-box":"box")} style={{
+            return (<div key={box.id} className={(box.found ? "found-box" : "box")} style={{
               left: box.tlx, top: box.tly,
               width: box.brx - box.tlx, height: box.bry - box.tly
-                
-            }}></div>
+            }}></div>)
           })}
           {isVisible && (
             <ul className="menu" onClick={handleClickMenu} style={{
@@ -100,7 +149,7 @@ function App() {
             }}>
               {names.map((name) => {
                 return (
-                  <li id={name.id} onClick={() => { checkChoice(name.id) }} className="menu-item">{name.name}</li>
+                  <li key={name.id} onClick={() => { checkChoice(name.id) }} className="menu-item">{name.name}</li>
                 );
               })}
             </ul>
@@ -108,6 +157,18 @@ function App() {
           <img src="/picture1.jpeg" alt="" />
         </div>
       </div>
+      <Modal
+        openModal={modal}
+        closeModal={() => setModal(false)}
+      >
+        <div className="modal-content">
+          <p>You found all the characters.</p>
+          <p>Elapsed time: {counter}</p>
+          <p>Type your username to save on the leaderboard.</p>
+          <input type="text" placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} />
+          <button onClick={handleSaveOnLeaderBoard}>Save</button>
+        </div>
+      </Modal>
     </>
   )
 }
@@ -115,20 +176,48 @@ function App() {
 export default App
 
 
-function Clock() {
-  const [counter, setCounter] = useState(0);
+function Clock({ running, counter, setCounter }) {
 
   useEffect(() => {
-    const key = setInterval(() => {
-      setCounter(count => count + 1)
-    }, 1000);
+    if (running) {
+      const key = setInterval(() => {
+        setCounter(count => count + 1)
+      }, 1000);
 
-    return () => {
-      clearInterval(key);
-    };
-  }, [])
+
+      return () => {
+        clearInterval(key);
+      };
+    }
+  }, [running])
 
   return (
     <p>{counter} seconds</p>
+  );
+}
+
+// Modal as a separate component
+
+function Modal({ openModal, closeModal, children, time, username, setUsername, handleSaveOnLeaderBoard }) {
+  const ref = useRef();
+
+  useEffect(() => {
+    if (openModal) {
+      ref.current?.showModal();
+    } else {
+      ref.current?.close();
+    }
+  }, [openModal]);
+
+  return (
+    <dialog
+      ref={ref}
+      onCancel={closeModal}
+    >
+      {children}
+      <button onClick={closeModal}>
+        Close
+      </button>
+    </dialog>
   );
 }

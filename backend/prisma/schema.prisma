@@ -1,0 +1,14 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model leaderboard {
+  id       Int    @id @default(autoincrement())
+  username String @db.VarChar(30)
+  time     Int
+}
