@@ -3,6 +3,11 @@
 
 ###
 
+GET http://localhost:3000/maps
+content-type: application/json
+
+###
+
 GET http://localhost:3000/level/2
 content-type: application/json
 

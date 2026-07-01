@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import { saveOnLeaderboard, sendHit, startGame } from './api/requests';
 
-function App() {
+function BoardPage() {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [running, setRunning] = useState(false);
   const [counter, setCounter] = useState(0);
@@ -173,7 +173,7 @@ function App() {
   )
 }
 
-export default App
+export default BoardPage
 
 
 function Clock({ running, counter, setCounter }) {

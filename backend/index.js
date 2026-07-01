@@ -37,6 +37,14 @@ app.use((req, res, next) => {
   }
 });
 
+app.get("/maps", async (req, res) => {
+  const maps = await prisma.maps.findMany();
+  return res.status(200).json({
+    success: true,
+    data: maps
+  });
+})
+
 async function startGame(req, res) {
   try {
     const payload = {

@@ -1,5 +1,20 @@
 const BASE_URL = "http://localhost:3000"
 
+async function getMaps() {
+    try {
+        const response = await fetch(BASE_URL + '/maps', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 async function saveOnLeaderboard(username) {
     const token = localStorage.getItem("token");
@@ -60,5 +75,6 @@ async function startGame(level) {
 export {
     sendHit,
     startGame,
-    saveOnLeaderboard
+    saveOnLeaderboard,
+    getMaps
 }
