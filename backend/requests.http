@@ -1,6 +1,5 @@
 
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTc4MjUxMTEyMywiZXhwIjoxNzgyNTk3NTIzfQ.LSm9KWVBlahM4QgTErZ-lXYMQ3LUtS_RLudP4Ifnf9M
-
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoxNzgyOTM1NTI5MDk1LCJtYXAiOjEsImNoYXJhY3RlcnMiOnsiV2VuZGEiOmZhbHNlLCJXb29mIjpmYWxzZSwiV2l6YXJkIjpmYWxzZSwiT2RsYXciOmZhbHNlfSwiaWF0IjoxNzgyOTM1NTI5LCJleHAiOjE3ODMwMjE5Mjl9.LNPFMOlIRqaCx8ReYih12MWa4JyWaTiDdlLmLl3NEIo
 ###
 
 GET http://localhost:3000/maps
@@ -8,12 +7,12 @@ content-type: application/json
 
 ###
 
-GET http://localhost:3000/level/2
+GET http://localhost:3000/level/1
 content-type: application/json
 
 ###
 
-POST http://localhost:3000/level/2/guess
+POST http://localhost:3000/level/1/guess
 content-type: application/json
 
 {
@@ -28,12 +27,12 @@ content-type: application/json
 Authorization: {{token}}
 
 {
-    "username":"Waldo",
+    "username":"Waldo"
 }
 
 ###
 
-GET http://localhost:3000/start/2
+GET http://localhost:3000/start/1
 content-type: application/json
 
 ###

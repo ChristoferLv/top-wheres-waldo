@@ -80,10 +80,13 @@ const boxes = [{ id: 0, name: "Waldo", found: false, tlx: 498, tly: 222, brx: 51
 
 app.post("/leaderboard/", passport.authenticate('jwt', { session: false }), async (req, res) => {
   const { username } = req.body;
+  const foundAll = Object.values(req.user.characters).every((status) => status == true);
+  if (!foundAll) {
+    return res.send({ success: false, message: "You havent finished the game!" });
+  }
   const startTime = req.user.time;
   const endTime = Date.now();
   const seconds = Math.floor((endTime - startTime) / 1000);
-  console.log(seconds, endTime, startTime)
   const result = await prisma.leaderboard.create({
     data: {
       username: username,
@@ -91,7 +94,7 @@ app.post("/leaderboard/", passport.authenticate('jwt', { session: false }), asyn
       mapId: req.user.map
     }
   });
-  res.send(result);
+  res.send({ success: true, data: result });
 });
 
 
@@ -117,7 +120,7 @@ app.post("/level/:id/guess", passport.authenticate('jwt', { session: false }), a
     const newState = { ...req.user, characters: { ...req.user.characters, [character]: true } };
     const token = jwt.sign(newState, process.env.JWT_SECRET);
     const finished = Object.values(newState.characters).every((char) => char);
-    res.send({ success: true, hit: true, token: `Bearer ${token}`, finished: finished });
+    res.send({ success: true, hit: true, token: `Bearer ${token}`, finished: finished, boundingBox: selectedBBox });
   } else {
     console.log("miss")
     res.send({ success: true, hit: false });
