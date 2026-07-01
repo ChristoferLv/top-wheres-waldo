@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import "./App.css"
 import { getMaps } from './api/requests.js'
+import { Link } from "react-router";
 
 function HomePage() {
     const [mapsList, setMapsList] = useState(null);
@@ -17,18 +18,24 @@ function HomePage() {
         fetchMaps();
     }, []);
 
-    if (!mapsList) return <><p>Loading maps list....</p></>
+    if (!mapsList) return <><p className="loading">Loading maps list....</p></>
 
     return (
         <div className="maps-page">
-            <h1>Maps</h1>
-            <div className="maps-list">
-                {mapsList.map((map) => {
-                    return (
-                        <div key={map.id} className="map-item">
-                            <p>Map: {map.name}</p>
-                        </div>)
-                })}
+            <div className="maps-body">
+                <div className="waldo"></div>
+                <div className="maps-list">
+                    <h1>Maps List</h1>
+                    {mapsList.map((map) => {
+                        return (
+                            <Link to={"/map/" + map.id}>
+                                <div key={map.id} className="map-item">
+                                    <p>Map: {map.name}</p>
+                                </div>
+                            </Link>)
+                    })}
+                </div>
+                <div className="waldo"></div>
             </div>
         </div>
     )

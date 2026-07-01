@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import { saveOnLeaderboard, sendHit, startGame } from './api/requests';
+import { useParams } from 'react-router';
 
 function BoardPage() {
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const { mapId } = useParams();
+  const [started, setStarted] = useState(false);
+  const [coords, setCoords] = useState({ x: -1000, y: -1000 });
   const [running, setRunning] = useState(false);
   const [counter, setCounter] = useState(0);
   const [modal, setModal] = useState(false);
@@ -86,7 +89,7 @@ function BoardPage() {
         return box;
       });
       setBoxes(newBoxes);
-      if(result.finished){
+      if (result.finished) {
         setRunning(false)
         setModal(true)
       }
@@ -111,7 +114,8 @@ function BoardPage() {
   async function handleStartGame() {
     const result = await startGame();
     if (result && result.success) {
-      setRunning(running => !running);
+      setStarted(true)
+      setRunning(true);
       console.log(result)
     }
   }
@@ -125,9 +129,12 @@ function BoardPage() {
   return (
     <>
       <div className='content'>
-        <Clock running={running} counter={counter} setCounter={setCounter}></Clock>
-        <button onClick={handleStartGame}>Start</button>
-        {huntStatus}
+        {
+          started ?
+            <><Clock running={running} counter={counter} setCounter={setCounter}></Clock>
+              {huntStatus}</>
+            : <button onClick={handleStartGame}>Start</button>
+        }
         <button
           onClick={() => setModal(true)}
         >
@@ -154,7 +161,7 @@ function BoardPage() {
               })}
             </ul>
           )}
-          <img src="/picture1.jpeg" alt="" />
+          <img className={started ? "" : "blur"} src="/picture1.jpeg" alt="" />
         </div>
       </div>
       <Modal
@@ -192,7 +199,7 @@ function Clock({ running, counter, setCounter }) {
   }, [running])
 
   return (
-    <p>{counter} seconds</p>
+    <p>Elapsed time: {counter} seconds</p>
   );
 }
 
