@@ -28,8 +28,8 @@ function HomePage() {
                     <h1>Maps List</h1>
                     {mapsList.map((map) => {
                         return (
-                            <Link to={"/map/" + map.id}>
-                                <div key={map.id} className="map-item">
+                            <Link key={map.id} to={"/map/" + map.id}>
+                                <div  className="map-item">
                                     <p>Map: {map.name}</p>
                                 </div>
                             </Link>)

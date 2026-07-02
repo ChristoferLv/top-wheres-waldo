@@ -33,12 +33,6 @@ function BoardPage() {
     return null;
   }).filter((name) => name != null);
 
-
-  // const handleClick = (event) => {
-  //   setIsVisible(current => !current)
-  //   setPosition([event.pageX, event.pageY]) // Save the pos where you clicked
-  // }
-
   /**
  * Handles the input value change event.
  * @param {React.ChangeEvent<HTMLInputElement>} event - The React change event object.
@@ -47,13 +41,13 @@ function BoardPage() {
     const frame = document.getElementById("picture-frame").getBoundingClientRect();
     const marker = document.getElementById("marker");
     // const boxlimit = document.getElementById("box");
-    console.log(event.target)
+    // console.log(event.target)
     const clickX = event.clientX - frame.x;
     const clickY = event.clientY - frame.y;
     const centerX = clickX - 12.5;
     const centerY = clickY - 12.5;
     // console.log(frame)
-    // console.log(clickX, clickY)
+    console.log(clickX, clickY)
 
     if (!isVisible)
       setCoords({ x: clickX, y: clickY });
@@ -110,7 +104,7 @@ function BoardPage() {
   }
 
   async function handleStartGame() {
-    const result = await startGame();
+    const result = await startGame(mapId);
     if (result && result.success) {
       setStarted(true)
       setRunning(true);
@@ -168,7 +162,7 @@ function BoardPage() {
               }
             </ul>
           )}
-          <img className={started ? "" : "blur"} src="/picture1.jpeg" alt="" />
+          <img className={started ? "" : "blur"} src={`/picture${mapId}.jpg`} alt="" />
         </div>
       </div>
       <Modal

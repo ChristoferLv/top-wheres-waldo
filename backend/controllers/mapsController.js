@@ -11,10 +11,12 @@ async function listMaps(req, res) {
 }
 
 async function startGame(req, res) {
+    const mapId = parseInt(req.params.mapId);
+    console.log("mapid", mapId)
     try {
         const payload = {
             time: Date.now(),
-            map: 1,
+            map: mapId,
             characters: {
                 "Wenda": false,
                 "Woof": false,
@@ -35,7 +37,7 @@ async function startGame(req, res) {
 
 async function makeGuess(req, res) {
     console.log(req.user, "req user");
-    const levelId = parseInt(req.params.mapId);
+    const levelId = +req.user.map;
     const { coords, character } = req.body;
     const levelData = await prisma.character_on_map.findFirst({ where: { mapId: levelId, character: { name: character } }, include: { character: true } });
     console.log(levelData)

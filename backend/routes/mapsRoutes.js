@@ -7,7 +7,7 @@ const mapsRouter = Router();
 
 mapsRouter.get("/", listMaps)
 mapsRouter.get("/:mapId/start", startGame)
-mapsRouter.post("/:mapId/guess",passport.authenticate('jwt', { session: false }), makeGuess)
+mapsRouter.post("/guess",passport.authenticate('jwt', { session: false }), makeGuess)
 
 
 

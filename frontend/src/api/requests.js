@@ -18,7 +18,7 @@ async function getMaps() {
 
 async function startGame(mapId) {
     try {
-        const response = await fetch(BASE_URL + '/maps/1/start', {
+        const response = await fetch(BASE_URL + `/maps/${mapId}/start`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -37,7 +37,7 @@ async function startGame(mapId) {
 async function sendHit(coords, character) {
     const token = localStorage.getItem("token");
     try {
-        const response = await fetch(BASE_URL + '/maps/1/guess', {
+        const response = await fetch(BASE_URL + '/maps/guess', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
