@@ -16,19 +16,18 @@ async function getMaps() {
     }
 }
 
-async function saveOnLeaderboard(username) {
-    const token = localStorage.getItem("token");
+async function startGame(mapId) {
     try {
-        const response = await fetch(BASE_URL + '/leaderboard', {
-            method: 'POST',
+        const response = await fetch(BASE_URL + '/maps/1/start', {
+            method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': token
-            },
-            body: JSON.stringify({ username: username })
+                'Content-Type': 'application/json'
+            }
         });
+
         const data = await response.json();
+        localStorage.setItem("token", data.token);
         return data;
     } catch (error) {
         console.log(error)
@@ -38,7 +37,7 @@ async function saveOnLeaderboard(username) {
 async function sendHit(coords, character) {
     const token = localStorage.getItem("token");
     try {
-        const response = await fetch(BASE_URL + '/level/1/guess', {
+        const response = await fetch(BASE_URL + '/maps/1/guess', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -54,18 +53,19 @@ async function sendHit(coords, character) {
     }
 }
 
-async function startGame(level) {
+async function saveOnLeaderboard(username) {
+    const token = localStorage.getItem("token");
     try {
-        const response = await fetch(BASE_URL + '/start/1', {
-            method: 'GET',
+        const response = await fetch(BASE_URL + '/leaderboard', {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify({ username: username })
         });
-
         const data = await response.json();
-        localStorage.setItem("token", data.token);
         return data;
     } catch (error) {
         console.log(error)
