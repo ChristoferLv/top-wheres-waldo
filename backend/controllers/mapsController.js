@@ -18,6 +18,7 @@ async function startGame(req, res) {
             time: Date.now(),
             map: mapId,
             characters: {
+                "Waldo":false,
                 "Wenda": false,
                 "Woof": false,
                 "Wizard": false,

@@ -22,7 +22,9 @@ async function main() {
   const maps = await prisma.maps.createManyAndReturn({
     data: [
       { id: 1, name: "Beach" },
-      { id: 2, name: "Moon Base" }
+      { id: 2, name: "Moon Base" },
+      { id: 3, name: "Snowy Mountains" },
+      { id: 4, name: "Maze" }
     ]
   });
 
@@ -68,7 +70,7 @@ async function main() {
       {
         characterId: 3,
         mapId: 2,
-        coords: { tlx: 709, tly: 551, brx: 722, bry: 558 }
+        coords: { tlx: 709, tly: 551, brx: 723, bry: 558 }
       },
       {
         characterId: 4,
@@ -79,6 +81,60 @@ async function main() {
         characterId: 5,
         mapId: 2,
         coords: { tlx: 89, tly: 419, brx: 103, bry: 436 }
+      },
+
+
+      {
+        characterId: 1,
+        mapId: 3,
+        coords: { tlx: 1028, tly: 438, brx: 1044, bry: 462 }
+      },
+      {
+        characterId: 2,
+        mapId: 3,
+        coords: { tlx: 592, tly: 254, brx: 603, bry: 273 }
+      },
+      {
+        characterId: 3,
+        mapId: 3,
+        coords: { tlx: 361, tly: 438, brx: 373, bry: 444 }
+      },
+      {
+        characterId: 4,
+        mapId: 3,
+        coords: { tlx: 86, tly: 458, brx: 102, bry: 473 }
+      },
+      {
+        characterId: 5,
+        mapId: 3,
+        coords: { tlx: 385, tly: 387, brx: 398, bry: 401 }
+      },
+
+
+      {
+        characterId: 1,
+        mapId: 4,
+        coords: { tlx: 681, tly: 260, brx: 692, bry: 272 }
+      },
+      {
+        characterId: 2,
+        mapId: 4,
+        coords: { tlx: 922, tly: 324, brx: 934, bry: 334}
+      },
+      {
+        characterId: 3,
+        mapId: 4,
+        coords: { tlx: 122, tly: 318, brx: 135, bry: 324 }
+      },
+      {
+        characterId: 4,
+        mapId: 4,
+        coords: { tlx: 815, tly: 182, brx: 828, bry: 191 }
+      },
+      {
+        characterId: 5,
+        mapId: 4,
+        coords: { tlx: 527, tly: 189, brx: 539, bry: 200 }
       }
     ]
   });
