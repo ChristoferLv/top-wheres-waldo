@@ -30,7 +30,8 @@ function HomePage() {
                         return (
                             <Link key={map.id} to={"/map/" + map.id}>
                                 <div  className="map-item">
-                                    <p>Map: {map.name}</p>
+                                    <img src={`/picture${map.id}.jpg`} alt={`Map ${map.id} mini picture`} />
+                                    <p>{map.name}</p>
                                 </div>
                             </Link>)
                     })}

@@ -129,7 +129,7 @@ async function main() {
       {
         characterId: 4,
         mapId: 4,
-        coords: { tlx: 815, tly: 182, brx: 828, bry: 191 }
+        coords: { tlx: 815, tly: 180, brx: 828, bry: 191 }
       },
       {
         characterId: 5,
