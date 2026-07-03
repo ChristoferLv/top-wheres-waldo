@@ -31,8 +31,11 @@ CREATE TABLE "character_on_map" (
     "mapId" INTEGER NOT NULL,
     "characterId" INTEGER NOT NULL,
 
-    CONSTRAINT "character_on_map_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "character_on_map_pkey" PRIMARY KEY ("mapId","characterId")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "character_on_map_id_key" ON "character_on_map"("id");
 
 -- AddForeignKey
 ALTER TABLE "leaderboard" ADD CONSTRAINT "leaderboard_mapId_fkey" FOREIGN KEY ("mapId") REFERENCES "maps"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
