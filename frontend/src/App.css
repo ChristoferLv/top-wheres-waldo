@@ -327,9 +327,10 @@ hr {
 dialog {
   border: none;
   border-radius: 10px;
-  position: relative;
-  flex-direction: column;
-
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
 }
 
 .save-button {
@@ -362,7 +363,7 @@ dialog {
   p:nth-child(2) {
     margin-top: 10px;
     margin-bottom: 5px;
-    font-size: larg;
+    font-size: large;
   }
 }
 
@@ -383,4 +384,9 @@ dialog {
   svg {
     display: block;
   }
+}
+
+.error {
+  color: red;
+  margin-top: 5px;
 }

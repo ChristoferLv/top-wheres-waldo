@@ -14,6 +14,7 @@ function BoardPage() {
   const [username, setUsername] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [position, setPosition] = useState([0, 0]) // State to save the position where you clicked
+  const [usernameError, setUsernameError] = useState(false);
   const [boxes, setBoxes] = useState([
     { id: 0, name: "Waldo", found: false },
     { id: 1, name: "Wenda", found: false },
@@ -112,8 +113,13 @@ function BoardPage() {
     }
   }
 
+
   async function handleSaveOnLeaderBoard(e) {
     e.preventDefault();
+    if (username.length > 30) {
+      setUsernameError(true);
+      return;
+    }
     const result = await saveOnLeaderboard(username);
     if (result && result.success) {
       setModal(false);
@@ -177,6 +183,7 @@ function BoardPage() {
             <form>
               <input type="text" placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} />
               <button type='submit' className='save-button' onClick={(e) => handleSaveOnLeaderBoard(e)}>Save</button>
+              {usernameError && <p className='error'>Username must have a maximum of 30 characters</p>}
             </form>
           </div>
         </div>
