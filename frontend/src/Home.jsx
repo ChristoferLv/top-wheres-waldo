@@ -8,7 +8,6 @@ function HomePage() {
 
     useEffect(() => {
         async function fetchMaps() {
-            console.log("fetching maps")
             const response = await getMaps();
             if (response.status == 200) {
                 const data = await response.json();

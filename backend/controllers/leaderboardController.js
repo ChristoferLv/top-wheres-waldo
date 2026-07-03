@@ -1,5 +1,5 @@
 import { prisma } from "../lib/prisma.js";
-import { body } from "express-validator"
+import { body, matchedData, validationResult } from "express-validator"
 
 const validateComment = [
     body("username")
@@ -18,7 +18,7 @@ const saveOnLeaderboard = [
                 return res.status(400).json({ success: false, error: errors });
             }
 
-            const { username } = req.body;
+            const { username } = matchedData(req);
             const foundAll = Object.values(req.user.characters).every((status) => status == true);
             if (!foundAll) {
                 return res.status(401).send({ success: false, message: "You havent finished the game!" });

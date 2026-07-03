@@ -9,6 +9,7 @@ function App() {
     <>
       <header>
         <Link to={"/"}>Where's Waldo</Link>
+        <Link className='leaderboard-button' to={"/leaderboard"}>Leaderboard</Link>
       </header>
       <Outlet />
     </>

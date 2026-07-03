@@ -13,15 +13,9 @@ function BoardPage() {
   const [modal, setModal] = useState(false);
   const [username, setUsername] = useState('');
   const [isVisible, setIsVisible] = useState(false);
-  const [position, setPosition] = useState([0, 0]) // State to save the position where you clicked
+  const [position, setPosition] = useState([0, 0])
   const [usernameError, setUsernameError] = useState(false);
-  const [boxes, setBoxes] = useState([
-    { id: 0, name: "Waldo", found: false },
-    { id: 1, name: "Wenda", found: false },
-    { id: 2, name: "Woof", found: false },
-    { id: 3, name: "Wizard", found: false },
-    { id: 4, name: "Odlaw", found: false },
-  ]);
+  const [boxes, setBoxes] = useState([]);
 
   const huntStatus = <ul className='hunt-status-ul'>
     {boxes.map((box) => <li key={box.id} className='hunt-status-li'>
@@ -41,25 +35,20 @@ function BoardPage() {
   function handleCLick(event) {
     const frame = document.getElementById("picture-frame").getBoundingClientRect();
     const marker = document.getElementById("marker");
-    // const boxlimit = document.getElementById("box");
-    // console.log(event.target)
+
     const clickX = event.clientX - frame.x;
     const clickY = event.clientY - frame.y;
     const centerX = clickX - 12.5;
     const centerY = clickY - 12.5;
-    // console.log(frame)
-    console.log(clickX, clickY)
+
+    // console.log(clickX, clickY)
 
     if (!isVisible)
       setCoords({ x: clickX, y: clickY });
-    // if (box.tlx <= clickX && clickX <= box.brx && box.tly <= clickY && clickY <= box.bry) {
-    //   console.log("inside")
-    // } else {
-    //   console.log("outside")
-    // }
+
     if (names.length > 0)
       setIsVisible(current => !current)
-    setPosition([centerX, centerY]) // Save the pos where you clicked
+    setPosition([centerX, centerY])
   }
 
   function handleClickMenu(event) {
@@ -71,8 +60,6 @@ function BoardPage() {
     const selected = boxes.find((box) => box.id == id);
     const result = await sendHit(coords, selected.name);
     if (result && result.hit) {
-      console.log("outside")
-
       localStorage.setItem("token", result.token);
       const newBoxes = boxes.map((box) => {
         if (box.id == selected.id) {
@@ -86,30 +73,16 @@ function BoardPage() {
         setModal(true);
         setFinished(true);
       }
-    } else {
-      console.log("outside")
     }
-    console.log(result)
-    // if (selected.tlx <= coords.x && coords.x <= selected.brx && selected.tly <= coords.y && coords.y <= selected.bry) {
-    //   console.log("inside");
-    //   const newBoxes = boxes.map((box) => {
-    //     if (box.id == selected.id) {
-    //       return { ...selected, found: true };
-    //     }
-    //     return box;
-    //   });
-    //   setBoxes(newBoxes);
-    // } else {
-    //   console.log("outside")
-    // }
+
   }
 
   async function handleStartGame() {
     const result = await startGame(mapId);
     if (result && result.success) {
-      setStarted(true)
+      setBoxes(result.characters);
+      setStarted(true);
       setRunning(true);
-      console.log(result)
     }
   }
 
@@ -135,11 +108,6 @@ function BoardPage() {
               {huntStatus}</>
             : <button className='start-button' onClick={handleStartGame}>Start</button>
         }
-        {/* <button
-          onClick={() => setModal(true)}
-        >
-          Open modal
-        </button> */}
         <div onClick={handleCLick} id='picture-frame' className="picture">
           <div style={{ left: coords.x, top: coords.y }} id='marker' className="marker"></div>
           {boxes.map((box) => {

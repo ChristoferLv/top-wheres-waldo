@@ -8,7 +8,6 @@ import mapsRouter from './routes/mapsRoutes.js';
 import leaderboardRouter from './routes/leaderboardRoutes.js';
 
 
-
 const app = express();
 app.use(json());
 
