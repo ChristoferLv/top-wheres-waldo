@@ -34,7 +34,7 @@ async function startGame(mapId) {
     }
 }
 
-async function sendHit(coords, character) {
+async function sendHit(coords, characterId) {
     const token = localStorage.getItem("token");
     try {
         const response = await fetch(BASE_URL + '/maps/guess', {
@@ -44,7 +44,7 @@ async function sendHit(coords, character) {
                 'Content-Type': 'application/json',
                 'Authorization': token
             },
-            body: JSON.stringify({ coords, character })
+            body: JSON.stringify({ coords, characterId })
         });
         const data = await response.json();
         return data;

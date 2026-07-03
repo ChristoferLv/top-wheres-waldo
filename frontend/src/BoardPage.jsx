@@ -58,7 +58,7 @@ function BoardPage() {
 
   async function checkChoice(id) {
     const selected = boxes.find((box) => box.id == id);
-    const result = await sendHit(coords, selected.name);
+    const result = await sendHit(coords, id);
     if (result && result.hit) {
       localStorage.setItem("token", result.token);
       const newBoxes = boxes.map((box) => {

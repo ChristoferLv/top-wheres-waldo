@@ -29,10 +29,12 @@ model maps {
 }
 
 model character_on_map {
-  id          Int        @id @default(autoincrement())
+  id          Int        @unique @default(autoincrement())
   coords      Json
   mapId       Int
   map         maps       @relation(fields: [mapId], references: [id])
   characterId Int
   character   characters @relation(fields: [characterId], references: [id])
+
+  @@id([mapId, characterId])
 }

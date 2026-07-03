@@ -1,28 +1,23 @@
 
-@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoxNzgyOTM1NTI5MDk1LCJtYXAiOjEsImNoYXJhY3RlcnMiOnsiV2VuZGEiOmZhbHNlLCJXb29mIjpmYWxzZSwiV2l6YXJkIjpmYWxzZSwiT2RsYXciOmZhbHNlfSwiaWF0IjoxNzgyOTM1NTI5LCJleHAiOjE3ODMwMjE5Mjl9.LNPFMOlIRqaCx8ReYih12MWa4JyWaTiDdlLmLl3NEIo
-###
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoxNzgzMDQzMzEyNzE3LCJtYXAiOjEsImNoYXJhY3RlcnMiOnsiV2FsZG8iOnRydWUsIldlbmRhIjp0cnVlLCJXb29mIjp0cnVlLCJXaXphcmQiOnRydWUsIk9kbGF3Ijp0cnVlfSwiaWF0IjoxNzgzMDQzMzEyLCJleHAiOjE3ODMxMjk3MTJ9.leIjvCfuOW6gmjVuzn8cCxRf56f23rCoKstUJuRBBic
 
 GET http://localhost:3000/maps
 content-type: application/json
 
 ###
 
-GET http://localhost:3000/start/1
+GET http://localhost:3000/maps/1/start
 content-type: application/json
 
 ###
 
-GET http://localhost:3000/level/1
+POST http://localhost:3000/maps/guess
 content-type: application/json
-
-###
-
-POST http://localhost:3000/level/1/guess
-content-type: application/json
+Authorization: {{token}}
 
 {
-    "character":"Waldo",
-    "coords":{"x":100, "y":200}
+    "characterId":5,
+    "coords":{"x":140, "y":220}
 }
 
 ###
@@ -37,7 +32,6 @@ content-type: application/json
 Authorization: {{token}}
 
 {
-    "username":"Waldo"
+    "username":"Requests"
 }
 
-###
