@@ -37,12 +37,12 @@ header {
   }
 }
 
-.maps-page {
+/* .maps-page {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex-grow: 1;
-}
+} */
 
 .maps-body {
   display: flex;
@@ -67,11 +67,11 @@ header {
   align-items: center;
   gap: 8px 0;
 
-  h1{
+  h1 {
     margin-bottom: 7px;
   }
 
-  a{
+  a {
     text-decoration: none;
     color: black;
   }
@@ -82,7 +82,7 @@ header {
   align-items: center;
   justify-content: space-evenly;
   padding: 5px;
-  width: clamp(250px,15vw,350px);
+  width: clamp(250px, 15vw, 350px);
   height: 120px;
   border: 1px black solid;
   border-radius: 15px;
@@ -90,9 +90,10 @@ header {
   background-color: white;
 
   transition: transform 0.3s;
+  will-change: transform;
   position: relative;
 
-  img{
+  img {
     border: 1px black solid;
     flex-grow: 0;
     flex-basis: 0;
@@ -101,7 +102,7 @@ header {
     object-fit: fill;
   }
 
-  p{
+  p {
     min-width: 100px;
     text-align: center;
     flex-grow: 0;
@@ -110,7 +111,7 @@ header {
   }
 }
 
-.map-item:hover{
+.map-item:hover {
   transform: scale(1.2);
   z-index: 999;
 }
@@ -252,9 +253,76 @@ img {
   padding: 1px;
 }
 
+.leaderboard-page {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
 
+.leaderboard {
+  display: flex;
+  flex-direction: column;
+  background-color: #9c0001;
+  width: 20vw;
+  min-width: 500px;
+  min-height: 500px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 20px -3px #000000;
+  margin: 20px 0;
+}
 
+.leaderboard-selection {
+  display: flex;
+  justify-content: space-around;
+  gap: 0 10px;
+  padding: 10px;
+}
 
+.leaderboard-selection button {
+  border: none;
+  background-color: white;
+  padding: 5px 10px;
+  width: 100px;
+  cursor: pointer;
+}
+
+hr {
+  flex-shrink: 0;
+  width: 99%;
+  box-sizing: border-box;
+}
+
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  gap: 10px 0;
+  color: white;
+  font-size: x-large;
+  padding-bottom: 20px;
+}
+
+.leaderboard-item {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: fit-content;
+  background-color: white;
+  color: black;
+  font-size: medium;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.15);
+  padding: 10px 10px;
+
+  p {
+    margin-bottom: 4px;
+    margin-top: 0;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+  }
+}
 
 dialog {
   border: none;
@@ -278,7 +346,7 @@ dialog {
   background-color: #0f730c;
 }
 
-.dialog-save{
+.dialog-save {
   display: flex;
 }
 

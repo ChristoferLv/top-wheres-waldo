@@ -72,9 +72,25 @@ async function saveOnLeaderboard(username) {
     }
 }
 
+async function getLeaderboardForMap(mapId) {
+    try {
+        const response = await fetch(BASE_URL + '/leaderboard/' + mapId, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export {
-    sendHit,
+    getMaps,
     startGame,
+    sendHit,
     saveOnLeaderboard,
-    getMaps
+    getLeaderboardForMap
 }

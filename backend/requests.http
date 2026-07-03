@@ -7,6 +7,11 @@ content-type: application/json
 
 ###
 
+GET http://localhost:3000/start/1
+content-type: application/json
+
+###
+
 GET http://localhost:3000/level/1
 content-type: application/json
 
@@ -22,6 +27,11 @@ content-type: application/json
 
 ###
 
+GET http://localhost:3000/leaderboard/1
+content-type: application/json
+
+###
+
 POST http://localhost:3000/leaderboard
 content-type: application/json
 Authorization: {{token}}
@@ -29,10 +39,5 @@ Authorization: {{token}}
 {
     "username":"Waldo"
 }
-
-###
-
-GET http://localhost:3000/start/1
-content-type: application/json
 
 ###

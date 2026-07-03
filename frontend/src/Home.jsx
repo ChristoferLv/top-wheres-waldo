@@ -21,7 +21,7 @@ function HomePage() {
     if (!mapsList) return <><p className="loading">Loading maps list....</p></>
 
     return (
-        <div className="maps-page">
+      
             <div className="maps-body">
                 <div className="waldo"></div>
                 <div className="maps-list">
@@ -38,7 +38,7 @@ function HomePage() {
                 </div>
                 <div className="waldo"></div>
             </div>
-        </div>
+       
     )
 }
 
