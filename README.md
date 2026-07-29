@@ -101,6 +101,10 @@ npm run dev
 - Vite
 - React Router
 
+## Visualization
+
+<img width="1910" height="915" alt="where is waldo screenshot" src="https://github.com/user-attachments/assets/c253c716-2b84-4a6c-9974-e1cfd974fe06" />
+
 ---
 
 Project developed following: [The Odin Project - Where's Waldo (A Photo Tagging App)](https://www.theodinproject.com/lessons/nodejs-where-s-waldo-a-photo-tagging-app)
