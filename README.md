@@ -1,6 +1,6 @@
 # Where's Waldo (A Photo Tagging App)
 
-A "Where's Waldo" style photo tagging app built as part of [The Odin Project Node.js](https://www.theodinproject.com/lessons/nodejs-where-s-waldo-a-photo-tagging-app) course. It features an Express, PostgreSQL, and Prisma backend with a React and Vite frontend.
+A "Where's Waldo" style photo tagging app built as part of [The Odin Project Node.js](https://www.theodinproject.com/paths/full-stack-javascript/courses/nodejs) course. It features an Express, PostgreSQL, and Prisma backend with a React and Vite frontend.
 
 ## Project Objective
 
